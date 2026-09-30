@@ -23,7 +23,9 @@
       Variablerne bruges længere nede med var(--sun-size) og var(--car-w).
       Når siden virker: prøv at ændre værdierne. Hvad sker der?
    */
-
+--sun-size: 100px;
+--car-w: 200px;
+--bus-w: 260px;
 }
 
 /* ---------------------------------------------------------
@@ -49,14 +51,25 @@
          var(--color-sky-top), var(--color-sky-mid), var(--color-sky-bot)
 */
 
-
+.scene {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(
+        var(--color-sky-top),
+        var(--color-sky-mid),
+        var(--color-sky-bot)
+    );
+}
 
 /* Skriv selv: nat-tilstand
    JavaScript tilføjer klassen "night" til .scene, når man klikker på solen.
    Skriv en regel for .scene.night, der sætter background til var(--color-night).
 */
+.scene.night {
+   background: var(--color-night);
 
-
+}
 
 /* ---------------------------------------------------------
    Sol og måne
@@ -118,12 +131,14 @@
 --------------------------------------------------------- */
 .car1,
 .car2,
-.car3 {
-   position: absolute;
-   width: var(--car-w);
-   max-width: 28vw;
-   z-index: 1;
-   cursor: pointer; /* viser en hånd, så man kan se, at bilerne kan klikkes */
+.car3,
+.bus,
+.truck {
+    position: absolute;
+    width: var(--car-w);
+    max-width: 28vw;
+    z-index: 1;
+    cursor: pointer;
 }
 
 /* ---------------------------------------------------------
@@ -156,6 +171,16 @@
    animation: car2 12s linear infinite;
 }
 
+
+@keyframes car2 {
+    0% {
+        transform: translateX(0) rotateY(180deg);
+    }
+    100% {
+        transform: translateX(-130vw) rotateY(180deg);
+    }
+}
+
 /* Skriv selv: @keyframes car2
    Brug car1 ovenfor som skabelon. Politibilen kører bare den modsatte vej.
 
@@ -181,8 +206,21 @@
    animation: car3 8s linear infinite;
 }
 
+@keyframes car3 {
+    0% {
+        transform: translateX(0) rotateY(180deg);
+    }
+    100% {
+        transform: translateX(130vw) rotateY(180deg);
+    }
+}
+
 /* Skriv selv: @keyframes car3
    Brug car1 ovenfor som skabelon. Den blå bil kører samme vej som car1.
+
+   @keyframes car1 {
+   0%   { transform: translateX(0); rotateY(180deg); }
+   100% { transform: translateX(130vw); rotateY(180deg); }
 
    Hvert trin skal have egenskaben transform med BEGGE funktioner:
        transform: translateX(...) rotateY(180deg);
@@ -193,7 +231,39 @@
      anden vej i billedfilen. Den skal stå i BEGGE trin,
      ellers vender bilen sig undervejs.
 */
+.bus {
+    bottom: 2.8vh;
+    right: -30vw;
+    width: var(--bus-w);
+    animation: bus 20s linear infinite;
+}
 
+@keyframes bus {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-130vw);
+    }
+}
+
+.truck {
+    bottom: -3.4vh;
+    right: -30vw;
+    width: var(--bus-w);
+    animation: truck 14s linear infinite;
+}
+
+@keyframes truck {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-130vw);
+    }
+}
 
 
 /* ---------------------------------------------------------
@@ -224,8 +294,10 @@
      - transform til translateY(0)
 */
 
-
-
+.tooltip.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* =========================================================
    EKSTRAOPGAVE: bus og truck
